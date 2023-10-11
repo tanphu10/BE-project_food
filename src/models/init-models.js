@@ -23,9 +23,9 @@ export default function initModels(sequelize) {
   food.hasMany(orders, { as: "orders", foreignKey: "food_id"});
   food.belongsTo(food_type, { as: "type", foreignKey: "type_id"});
   food_type.hasMany(food, { as: "foods", foreignKey: "type_id"});
-  likes.belongsTo(res, { as: "re", foreignKey: "res_id"});
+  likes.belongsTo(res, { as: "res", foreignKey: "res_id"});
   res.hasMany(likes, { as: "likes", foreignKey: "res_id"});
-  rate_res.belongsTo(res, { as: "re", foreignKey: "res_id"});
+  rate_res.belongsTo(res, { as: "res", foreignKey: "res_id"});
   res.hasMany(rate_res, { as: "rate_res", foreignKey: "res_id"});
   likes.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(likes, { as: "likes", foreignKey: "user_id"});

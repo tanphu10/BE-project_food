@@ -1,9 +1,9 @@
 import express from "express";
-import { userSignUp } from "../controllers/userController.js";
+import { userSignUp,getUser } from "../controllers/userController.js";
 
 const userRoute = express.Router();
 
-// đăng ký
-userRoute.get("/get-All", userSignUp);
+// lấy danh sách theo by id
+userRoute.get("/get-user/:id", getUser);
 
 export default userRoute;

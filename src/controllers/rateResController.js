@@ -1,20 +1,28 @@
 import initModels from "../models/init-models.js";
-import sequelize from "../models/connect.js"
+import sequelize from "../models/connect.js";
 const model = initModels(sequelize);
 
 const postRate = async (req, res) => {
   let data = req.body;
-  console.log(req.body)
-  console.log("data",data);
-  await model.rate_res.create(data);
-  // console.log("data", data);
-  res.send("add successful")
-  // e cung ko hieu bị hôm qua h ngồi mò quài không ra
+  let { user_id, res_id, amount } = data;
+  let date_rate = new Date();
+  let checkRate = await model.rate_res.findOne({ where: { user_id, res_id } });
+
+  if (checkRate.length) {
+    await model.rate_res.update(
+      { amount, date_rate },
+      { where: { user_id, res_id } }
+    );
+    res.status(200).send("update successful");
+  } else {
+    await model.rate_res.create({ user_id, res_id, amount, date_rate });
+    res.status(200).send("add successful");
+  }
 };
 
 const getListRate = async (req, res) => {
   let data = await model.rate_res.findAll({
-    include: ["user"],
+    include: ["user", "res"],
   });
   res.send(data);
 };
