@@ -17,15 +17,19 @@ export default function initModels(sequelize) {
   const res = _res.init(sequelize, DataTypes);
   const users = _users.init(sequelize, DataTypes);
 
+  food.belongsToMany(users, { as: 'user_id_users_orders', through: orders, foreignKey: "food_id", otherKey: "user_id" });
   res.belongsToMany(users, { as: 'user_id_users', through: likes, foreignKey: "res_id", otherKey: "user_id" });
+  res.belongsToMany(users, { as: 'user_id_users_rate_res', through: rate_res, foreignKey: "res_id", otherKey: "user_id" });
+  users.belongsToMany(food, { as: 'food_id_foods', through: orders, foreignKey: "user_id", otherKey: "food_id" });
   users.belongsToMany(res, { as: 'res_id_res', through: likes, foreignKey: "user_id", otherKey: "res_id" });
+  users.belongsToMany(res, { as: 'res_id_res_rate_res', through: rate_res, foreignKey: "user_id", otherKey: "res_id" });
   orders.belongsTo(food, { as: "food", foreignKey: "food_id"});
   food.hasMany(orders, { as: "orders", foreignKey: "food_id"});
   food.belongsTo(food_type, { as: "type", foreignKey: "type_id"});
   food_type.hasMany(food, { as: "foods", foreignKey: "type_id"});
-  likes.belongsTo(res, { as: "res", foreignKey: "res_id"});
+  likes.belongsTo(res, { as: "re", foreignKey: "res_id"});
   res.hasMany(likes, { as: "likes", foreignKey: "res_id"});
-  rate_res.belongsTo(res, { as: "res", foreignKey: "res_id"});
+  rate_res.belongsTo(res, { as: "re", foreignKey: "res_id"});
   res.hasMany(rate_res, { as: "rate_res", foreignKey: "res_id"});
   likes.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(likes, { as: "likes", foreignKey: "user_id"});

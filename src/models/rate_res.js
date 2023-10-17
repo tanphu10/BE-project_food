@@ -4,15 +4,10 @@ const { Model, Sequelize } = _sequelize;
 export default class rate_res extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'users',
         key: 'id'
@@ -21,6 +16,7 @@ export default class rate_res extends Model {
     res_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'res',
         key: 'id'
@@ -44,14 +40,8 @@ export default class rate_res extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "user_id",
-        using: "BTREE",
-        fields: [
           { name: "user_id" },
+          { name: "res_id" },
         ]
       },
       {

@@ -6,7 +6,8 @@ export default class orders extends Model {
   return super.init({
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+      primaryKey: true,
       references: {
         model: 'users',
         key: 'id'
@@ -14,7 +15,8 @@ export default class orders extends Model {
     },
     food_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+      primaryKey: true,
       references: {
         model: 'food',
         key: 'id'
@@ -22,7 +24,7 @@ export default class orders extends Model {
     },
     amount: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     code_: {
       type: DataTypes.STRING(200),
@@ -38,10 +40,12 @@ export default class orders extends Model {
     timestamps: false,
     indexes: [
       {
-        name: "user_id",
+        name: "PRIMARY",
+        unique: true,
         using: "BTREE",
         fields: [
           { name: "user_id" },
+          { name: "food_id" },
         ]
       },
       {
